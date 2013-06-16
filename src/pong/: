@@ -1,0 +1,29 @@
+(ns pong.core)
+
+(def HEIGHT 300)
+(def WIDTH 600)
+
+(defn make-paddle [w h x y]
+  {:w w :h h :y y})
+
+(defn make-ball [x y sx sy]
+  {:x x :y y :sx sx :sy sy})
+
+(defn paddle-hit? [ball paddle]
+  (and 
+    (> newy (:y paddle))
+    (< newy (+ (:y paddle) (:h paddle)))))
+
+(defn update-ball [ball]
+  (let [newx (+ (:x ball) (:sx ball))
+        newy (+ (:y ball) (:sy ball))
+        newsx (cond
+                (< newx (:w paddle1))
+                  (if (and 
+                        (> newy (:y paddle1))
+                        (< newy (+ (:y paddle1) (:h paddle1))))
+                    (- (:sx ball)))
+
+                (> (+ newx (:w ball)) (- WIDTH (:w paddle2)))
+
+
