@@ -1,3 +1,4 @@
 # Introduction to pong
 
-TODO: write [great documentation](http://jacobian.org/writing/great-documentation/what-to-write/)
+Q A - paddle 1 up / down
+P L - paddle 2 up / down
