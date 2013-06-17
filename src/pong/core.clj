@@ -182,3 +182,6 @@
     :setup setup
     :draw draw
     :size [WIDTH HEIGHT]))
+
+(defn -main [& args]
+  (go))

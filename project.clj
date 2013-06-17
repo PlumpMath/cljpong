@@ -5,4 +5,5 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.1"]
                   [org.clojure/tools.namespace "0.2.3"]
-                 [quil "1.6.0"]])
+                 [quil "1.6.0"]]
+  :main pong.core)
