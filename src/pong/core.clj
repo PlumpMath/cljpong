@@ -43,17 +43,17 @@
 (defn update-paddle [paddle]
   (make-paddle
     (:x paddle)
-    (cond
-      ((deref pressed) (:up paddle))
-      (if (> HEIGHT (+ (:y paddle) (:h paddle)))
-        (+ (:y paddle) 3) 
-        (:y paddle))
-      ((deref pressed) (:dn paddle))
-      (if (< 0 (:y paddle))
-        (- (:y paddle) 3) 
-        (:y paddle))
-      :else
-      (:y paddle))
+    (+ (:y paddle)
+      (if ; up key pressed
+        (and 
+        ((deref pressed) (:up paddle))
+        (> HEIGHT (+ (:y paddle) (:h paddle)))) 
+      3 0)
+      (if ; down key pressed
+        (and 
+          ((deref pressed) (:dn paddle))
+          (< 0 (:y paddle))) 
+      -3 0))
     (:w paddle)
     (:h paddle)
     (:up paddle)
