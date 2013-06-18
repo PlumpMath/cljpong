@@ -46,7 +46,7 @@
     (+ (:y paddle)
       (if ; up key pressed
         (and 
-          ((deref pressed) (:up paddle))
+          (@deref (:up paddle))
           (> HEIGHT (+ (:y paddle) (:h paddle)))) 
       3 0)
       (if ; down key pressed
