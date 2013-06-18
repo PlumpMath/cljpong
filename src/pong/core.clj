@@ -10,6 +10,15 @@
 (def PADDLE-W 10)
 (def PADDLE-H 80)
 
+; Helpers ----
+
+(defn map->rect [m]
+  (apply rect
+    ((juxt :x :y :w :h) m)))
+
+(defn rand+- []
+  (get [+ -]  (rand-int 2)))
+
 ; Keycodes ----
 
 (def Q 65)
@@ -34,9 +43,7 @@
 
 (defn draw-paddle [paddle]
   (fill 200)
-  (rect 
-    (:x paddle) (:y paddle)
-    (:w paddle) (:h paddle)))
+  (map->rect paddle))
 
 (defn update-paddle [paddle]
   (make-paddle
@@ -61,9 +68,6 @@
   {:x x :y y 
    :w w :h h
    :sx sx :sy sy})
-
-(defn rand+- []
-  (get [+ -]  (rand-int 2)))
 
 (defn initial-ball []
   (make-ball 
@@ -108,9 +112,7 @@
 
 (defn draw-ball [ball]
   (fill 200)
-  (rect 
-    (:x ball) (:y ball)
-    (:w ball) (:h ball)))
+  (map->rect ball))
 
 ; World ----
 
