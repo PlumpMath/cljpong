@@ -46,12 +46,12 @@
     (+ (:y paddle)
       (if ; up key pressed
         (and 
-        ((deref pressed) (:up paddle))
+        (@pressed (:up paddle))
         (> HEIGHT (+ (:y paddle) (:h paddle)))) 
       3 0)
       (if ; down key pressed
         (and 
-          ((deref pressed) (:dn paddle))
+          (@pressed (:dn paddle))
           (< 0 (:y paddle))) 
       -3 0))
     (:w paddle)
