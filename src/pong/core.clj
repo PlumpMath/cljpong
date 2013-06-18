@@ -1,7 +1,7 @@
 (ns pong.core
   (:use quil.core))
 
-; Constants ------
+; Constants ----
 
 (def HEIGHT 300)
 (def WIDTH 800) 
@@ -9,15 +9,15 @@
 (def BALL-H 4)
 (def PADDLE-W 10)
 (def PADDLE-H 80)
-(def pressed (atom #{}))
 
-; keycodes
+; Keycodes ----
+
 (def Q 65)
 (def A 81)
 (def P 76)
 (def L 80)
 
-; Paddles -----
+; Paddles ----
 
 (defn make-paddle [x y w h up dn]
   {:x x :y y :w w :h h :up up :dn dn})
@@ -35,10 +35,8 @@
 (defn draw-paddle [paddle]
   (fill 200)
   (rect 
-    (:x paddle)
-    (:y paddle)
-    (:w paddle)
-    (:h paddle)))
+    (:x paddle) (:y paddle)
+    (:w paddle) (:h paddle)))
 
 (defn update-paddle [paddle]
   (make-paddle
@@ -54,17 +52,25 @@
           (@pressed (:dn paddle))
           (< 0 (:y paddle))) 
       -3 0))
-    (:w paddle)
-    (:h paddle)
-    (:up paddle)
-    (:dn paddle)))
+    (:w paddle) (:h paddle)
+    (:up paddle) (:dn paddle)))
 
-; Ball -----
+; Ball ----
 
 (defn make-ball [x y w h sx sy]
   {:x x :y y 
    :w w :h h
    :sx sx :sy sy})
+
+(defn rand+- []
+  (get [+ -]  (rand-int 2)))
+
+(defn initial-ball []
+  (make-ball 
+    (- (/ WIDTH 2) (/ BALL-W 2))
+    (- (/ HEIGHT 2) (/ BALL-H 2))
+    BALL-W BALL-H
+    ((rand+-) 3) ((rand+-) 3)))
 
 (defn collision? [ball paddle]
   (and
@@ -103,24 +109,8 @@
 (defn draw-ball [ball]
   (fill 200)
   (rect 
-    (:x ball)
-    (:y ball)
-    (:w ball)
-    (:h ball)))
-
-; Setup -------
-
-(defn rand+- []
-  (get [+ -]  (rand-int 2)))
-
-(defn initial-ball []
-  (make-ball 
-    (- (/ WIDTH 2) (/ BALL-W 2))
-    (- (/ HEIGHT 2) (/ BALL-H 2))
-    BALL-W
-    BALL-H
-    ((rand+-) 3)
-    ((rand+-) 3)))
+    (:x ball) (:y ball)
+    (:w ball) (:h ball)))
 
 ; World ----
 
@@ -149,7 +139,7 @@
   (draw-paddle (:paddle1 world))
   (draw-paddle (:paddle2 world)))
 
-; draw ---- 
+; Draw ---- 
 
 (defn draw-background []
   (no-stroke)
@@ -162,15 +152,21 @@
   (draw-background)
   (draw-world (nth game-states (frame-count))))
 
-(defn setup []
-  (background 255)
-  (smooth))            
+; Key Handling ----
+
+(def pressed (atom #{}))
 
 (defn key-pressed []
   (swap! pressed conj (key-code)))
 
 (defn key-released []
   (swap! pressed disj (key-code)))
+
+; Setup ----
+
+(defn setup []
+  (background 255)
+  (smooth))
 
 (defn go []
   (defsketch pong
