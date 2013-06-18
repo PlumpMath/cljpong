@@ -109,7 +109,7 @@
     (:h ball)))
 
 ; Setup -------
-;
+
 (defn rand+- []
   (get [+ -]  (rand-int 2)))
 
@@ -134,9 +134,7 @@
     initial-paddle2))
 
 (defn end-game? [world]
-  (or 
-    (> 0 (:x (:ball world)))
-    (< WIDTH (+ (:x (:ball world)) (:w (:ball world))))))
+  (out-of-bounds? (:ball world)))
 
 (defn update-world [world]              
   (make-world
