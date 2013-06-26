@@ -10,6 +10,9 @@
 (def PADDLE-W 10)
 (def PADDLE-H 80)
 
+; Keys pressed global
+(def pressed (atom #{}))
+
 ; Helpers ----
 
 (defn map->rect [m]
@@ -94,9 +97,7 @@
     (< WIDTH (:x ball))))
 
 (defn update-ball [world]
-  (let [ball (:ball world)
-        paddle1 (:paddle1 world)
-        paddle2 (:paddle2 world)
+  (let [{:keys [ball paddle1 paddle2]} world
         newsx (if (or 
                     (collision? ball paddle1)
                     (collision? ball paddle2))
@@ -105,10 +106,9 @@
                 (- (:sy ball)) (:sy ball))
         newx (+ (:x ball) newsx)
         newy (+ (:y ball) newsy)]
-    (make-ball 
-      newx newy
-      (:w ball) (:h ball)
-      newsx newsy)))
+    (make-ball newx newy
+               (:w ball) (:h ball)
+               newsx newsy)))
 
 (defn draw-ball [ball]
   (fill 200)
@@ -155,8 +155,6 @@
   (draw-world (nth game-states (frame-count))))
 
 ; Key Handling ----
-
-(def pressed (atom #{}))
 
 (defn key-pressed []
   (swap! pressed conj (key-code)))
